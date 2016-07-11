@@ -1770,11 +1770,15 @@ use Harvest\Model\Invoice\Filter;
      * @param  int    $user_id    User identifier optional
      * @return Result
      */
-    public function getProjectEntries($project_id, Range $range, $user_id = null)
+    public function getProjectEntries($project_id, Range $range, $user_id = null, $only_unbilled = false)
     {
         $url = "projects/" . $project_id . "/entries?from=" . $range->from() . '&to=' . $range->to();
         if (! is_null($user_id)) {
             $url .= "&user_id=" . $user_id;
+        }
+
+        if ($only_unbilled) {
+            $url .= "&only_unbilled=yes";
         }
 
         return $this->performGet($url, true);
