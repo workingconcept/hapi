@@ -1837,6 +1837,32 @@ use Harvest\Model\Invoice\Filter;
         return $this->performGet($url, true);
     }
 
+    /**
+     * get all project expenses for given time range
+     *
+     * <code>
+     * $range = new Range( "20090712", "20090719" );
+     * $project_id = 11111;
+     *
+     * $api = new HarvestAPI();
+     *
+     * $result = $api->getProjectExpenses( $project_id, $range );
+     * if ( $result->isSuccess() ) {
+     *     $expenses = $result->data;
+     * }
+     * </code>
+     *
+     * @param  int    $project_id Project Identifier
+     * @param  Range  $range   Time Range
+     * @return Result
+     */
+    public function getProjectExpenses($project_id, Range $range)
+    {
+        $url = "projects/" . $project_id . "/expenses?from=" . $range->from() . '&to=' . $range->to();
+
+        return $this->performGET( $url, true );
+    }
+
     /*--------------------------------------------------------------*/
     /*------------------------ Invoices API ------------------------*/
     /*--------------------------------------------------------------*/
